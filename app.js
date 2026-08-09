@@ -322,6 +322,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 group.appendChild(inputEl);
                 dynamicInputsContainer.appendChild(group);
             });
+
+            // Submit button inside input form
+            const submitBtn = document.createElement("button");
+            submitBtn.className = "input-submit-btn";
+            submitBtn.innerHTML = "▶ Submit & Run Code";
+            submitBtn.addEventListener("click", () => {
+                runCodeBtn.click();
+            });
+            dynamicInputsContainer.appendChild(submitBtn);
+
+            // Focus the first input field
+            setTimeout(() => {
+                const firstInput = dynamicInputsContainer.querySelector("input");
+                if (firstInput) firstInput.focus();
+            }, 100);
         } else {
             userInputSection.style.display = "none";
             terminalContainer.style.display = "none";

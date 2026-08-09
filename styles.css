@@ -727,14 +727,40 @@ pre code {
     }
 }
 
-.dynamic-inputs-container {
-    padding: 16px;
+.user-input-section {
     border-bottom: 1px solid var(--border-color);
+    background: rgba(17, 24, 39, 0.4);
+}
+
+.input-section-header {
+    padding: 12px 16px 4px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.input-section-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #10b981;
+    letter-spacing: 0.5px;
+}
+
+.input-section-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.dynamic-inputs-container {
+    padding: 12px 16px 16px 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     overflow-y: auto;
-    max-height: 40vh;
+    max-height: 35vh;
 }
 
 .input-group {
@@ -746,23 +772,57 @@ pre code {
 .input-label {
     font-family: 'Fira Code', monospace;
     font-size: 0.8rem;
-    color: #9ca3af;
+    color: #d1d5db;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-label::before {
+    content: ">";
+    color: #10b981;
+    font-weight: bold;
 }
 
 .dynamic-input {
-    background: #111827;
+    background: #0d1117;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    color: #fff;
-    padding: 8px 12px;
+    color: #6ee7b7;
+    padding: 10px 14px;
     font-family: 'Fira Code', monospace;
     font-size: 0.85rem;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s ease;
 }
 
 .dynamic-input:focus {
     border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    background: #111827;
+}
+
+.input-submit-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-top: 4px;
+}
+
+.input-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.input-submit-btn:active {
+    transform: translateY(0);
 }
 
 body.modal-open {
