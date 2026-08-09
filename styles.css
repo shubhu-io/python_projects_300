@@ -682,3 +682,16 @@ pre code {
 .terminal-output .error {
     color: #fca5a5;
 }
+
+.terminal-input-active {
+    display: inline-block;
+    outline: none;
+    min-width: 8px;
+    border-bottom: 2px solid #a7f3d0;
+    animation: blink 1s step-end infinite;
+    color: #fff;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}

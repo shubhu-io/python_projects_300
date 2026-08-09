@@ -34,33 +34,84 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    let pyodideInstance = null;
-    let pyodideLoading = false;
+    let pythonWorker = null;
+    let isExecuting = false;
 
-    async function initPyodide() {
-        if (pyodideInstance || pyodideLoading) return;
-        pyodideLoading = true;
-        try {
-            pyodideInstance = await loadPyodide({
-                stdout: (text) => {
-                    terminalOutput.textContent += text + "\n";
-                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-                },
-                stderr: (text) => {
-                    terminalOutput.innerHTML += `<span class="error">${text}</span>\n`;
-                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-                }
-            });
-            runCodeBtn.textContent = "▶ Run Code";
-            runCodeBtn.disabled = false;
-        } catch (err) {
-            console.error("Failed to load Pyodide", err);
-            runCodeBtn.textContent = "Error loading Python";
-        }
+    // Register Service Worker for synchronous input interception
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            console.log("Service Worker registered.", reg);
+        }).catch((err) => {
+            console.error("Service Worker registration failed:", err);
+        });
+
+        // Listen for messages from Service Worker (Input requests)
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'INPUT_REQUESTED') {
+                handleTerminalInput(event.data.id);
+            }
+        });
     }
-    
-    // Start loading Pyodide in the background
-    initPyodide();
+
+    function initPythonWorker() {
+        if (pythonWorker) return;
+        pythonWorker = new Worker('worker.js');
+        
+        pythonWorker.addEventListener('message', (e) => {
+            const data = e.data;
+            if (data.type === 'ready') {
+                runCodeBtn.textContent = "▶ Run Code";
+                runCodeBtn.disabled = false;
+            } else if (data.type === 'stdout') {
+                terminalOutput.textContent += data.text;
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            } else if (data.type === 'stderr') {
+                terminalOutput.innerHTML += `<span class="error">${data.text}</span>`;
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            } else if (data.type === 'done') {
+                isExecuting = false;
+                runCodeBtn.disabled = false;
+                runCodeBtn.textContent = "▶ Run Code";
+                terminalOutput.textContent += "\n>>> Execution Completed.\n";
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+    }
+
+    function handleTerminalInput(requestId) {
+        // Create an input element right inside the terminal
+        const inputField = document.createElement("span");
+        inputField.contentEditable = "true";
+        inputField.className = "terminal-input-active";
+        
+        terminalOutput.appendChild(inputField);
+        inputField.focus();
+
+        // Listen for Enter key
+        inputField.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                const text = inputField.textContent;
+                
+                // Lock the text in place
+                inputField.contentEditable = "false";
+                inputField.className = "";
+                terminalOutput.appendChild(document.createTextNode("\n"));
+                
+                // Send answer back to Service Worker
+                if (navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'INPUT_PROVIDED',
+                        id: requestId,
+                        text: text
+                    });
+                }
+            }
+        });
+    }
+
+    // Start loading Python environment in the background
+    initPythonWorker();
 
     // Fetch projects_data.json
     fetch("projects_data.json")
@@ -228,25 +279,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Run Code Listener
-    runCodeBtn.addEventListener("click", async () => {
-        if (!pyodideInstance) return;
+    runCodeBtn.addEventListener("click", () => {
+        if (!pythonWorker || isExecuting) return;
         
         const codeText = modalCodeBlock.textContent;
         terminalContainer.style.display = "block";
         terminalOutput.textContent = "Executing...\n\n";
+        
+        isExecuting = true;
         runCodeBtn.disabled = true;
         runCodeBtn.textContent = "⏳ Running...";
 
-        try {
-            await pyodideInstance.runPythonAsync(codeText);
-            terminalOutput.textContent += "\n>>> Execution Completed.";
-        } catch (err) {
-            terminalOutput.innerHTML += `\n<span class="error">${err.message}</span>`;
-        } finally {
-            runCodeBtn.disabled = false;
-            runCodeBtn.textContent = "▶ Run Code";
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        }
+        pythonWorker.postMessage({ type: "runCode", code: codeText });
     });
 
     // Search Input Listener
