@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Python Projects Explorer | Interactive Code Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Highlight.js for Code Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-group">
+                <div class="python-logo-badge">🐍</div>
+                <div>
+                    <h1>100 Python Projects</h1>
+                    <p class="subtitle">Complete Source Code, Interactive Explorer & Practice Hub</p>
+                </div>
+            </div>
+            <div class="stats-badge">
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-total">300</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-completed">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Sidebar & Filters -->
+        <aside class="sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search projects, tags, topics..." autocomplete="off">
+            </div>
+
+            <div class="filter-section">
+                <h3>Difficulty Level</h3>
+                <div class="filter-pills" id="difficulty-filters">
+                    <button class="pill active" data-difficulty="all">All (300)</button>
+                    <button class="pill pill-beginner" data-difficulty="Beginner">🟢 Beginner (100)</button>
+                    <button class="pill pill-intermediate" data-difficulty="Intermediate">🟡 Intermediate (100)</button>
+                    <button class="pill pill-advanced" data-difficulty="Advanced">🔴 Advanced (100)</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Categories</h3>
+                <div class="category-list" id="category-filters">
+                    <button class="cat-btn active" data-category="all">
+                        <span>All Categories</span>
+                        <span class="count-badge" id="count-all">100</span>
+                    </button>
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Projects Grid Section -->
+        <section class="content-area">
+            <div class="toolbar">
+                <div class="results-info">
+                    Showing <span id="visible-count">100</span> projects
+                </div>
+                <div class="sort-group">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select">
+                        <option value="id-asc">Project # (1 to 100)</option>
+                        <option value="id-desc">Project # (100 to 1)</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projects-grid">
+                <!-- Project Cards Rendered via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Code Viewer Modal -->
+    <div class="modal-overlay" id="code-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge" id="modal-diff-badge">Beginner</span>
+                    <h2 id="modal-project-title">001: Hello World Plus</h2>
+                </div>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description" id="modal-project-desc">Project description goes here...</p>
+
+                <div class="modal-meta-row">
+                    <span class="meta-item">📁 <strong id="modal-folder">01_beginner</strong></span>
+                    <span class="meta-item">📄 <strong id="modal-filename">001_hello_world_plus.py</strong></span>
+                    <div class="tags-row" id="modal-tags"></div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>PYTHON SOURCE CODE</span>
+                        <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                    </div>
+                    <pre><code class="language-python" id="modal-code-block"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
