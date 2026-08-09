@@ -29,10 +29,10 @@ async function initPyodide() {
     try {
         pyodide = await loadPyodide({
             stdout: (text) => {
-                postMessage({ type: "stdout", text: text });
+                postMessage({ type: "stdout", text: text + "\n" });
             },
             stderr: (text) => {
-                postMessage({ type: "stderr", text: text });
+                postMessage({ type: "stderr", text: text + "\n" });
             }
         });
 
