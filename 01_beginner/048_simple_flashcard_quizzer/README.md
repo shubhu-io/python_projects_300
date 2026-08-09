@@ -1,19 +1,30 @@
-# Simple Flashcard Quizzer
+# 🚀 Simple Flashcard Quizzer
 
-## Description
+## 📝 Description
 A basic CLI flashcard tool.
 
-## Concepts Used
-- Conditions
-- Dictionaries/Sets
-- Functions
-- Input/Output
-- Loops
-- Modules/Libraries
-- Variables
+### 🎯 Category
+**Utilities & Games**
 
-## How to Run
+## 💡 Concepts Covered
+- Control Flow (`if`/`else`)
+- Functions & Modular Code
+- User Input
+- Module Importing
+- Loops (`for`/`while`)
 
+## 💻 Source Code
+The core logic of this project is implemented in Python. You can view the raw source code in [`048_simple_flashcard_quizzer.py`](./048_simple_flashcard_quizzer.py).
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 048_simple_flashcard_quizzer.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Simple Flashcard Quizzer in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**

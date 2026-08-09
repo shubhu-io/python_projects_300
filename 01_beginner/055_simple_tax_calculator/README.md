@@ -1,18 +1,29 @@
-# Simple Tax Calculator
+# 🚀 Simple Tax Calculator
 
-## Description
+## 📝 Description
 Calculate tax based on a flat rate.
 
-## Concepts Used
-- Conditions
-- Dictionaries/Sets
-- Functions
-- Input/Output
-- Loops
-- Variables
+### 🎯 Category
+**Finance & Utilities**
 
-## How to Run
+## 💡 Concepts Covered
+- Control Flow (`if`/`else`)
+- Error Handling (`try`/`except`)
+- Functions & Modular Code
+- User Input
 
+## 💻 Source Code
+The core logic of this project is implemented in Python. You can view the raw source code in [`055_simple_tax_calculator.py`](./055_simple_tax_calculator.py).
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 055_simple_tax_calculator.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Simple Tax Calculator in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**

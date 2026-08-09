@@ -1,19 +1,30 @@
-# Prime Factorization Engine
+# 🚀 Prime Factorization Engine
 
-## Description
+## 📝 Description
 Find prime factors of a number.
 
-## Concepts Used
-- Conditions
-- Dictionaries/Sets
-- Functions
-- Input/Output
-- Lists/Arrays
-- Loops
-- Variables
+### 🎯 Category
+**Math & Logic**
 
-## How to Run
+## 💡 Concepts Covered
+- Control Flow (`if`/`else`)
+- Functions & Modular Code
+- Error Handling (`try`/`except`)
+- User Input
+- Loops (`for`/`while`)
 
+## 💻 Source Code
+The core logic of this project is implemented in Python. You can view the raw source code in [`100_prime_factorization_engine.py`](./100_prime_factorization_engine.py).
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 100_prime_factorization_engine.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Prime Factorization Engine in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**

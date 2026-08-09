@@ -1,18 +1,28 @@
-# Disk Usage Tree Analyzer
+# 🚀 Disk Usage Tree Analyzer
 
-## Description
+## 📝 Description
 Intermediate Python project focusing on Disk Usage Tree Analyzer with robust logic and data handling.
 
-## Concepts Used
-- Classes/OOP
-- Conditions
-- Dictionaries/Sets
-- Functions
-- Input/Output
-- Variables
+### 🎯 Category
+**Algorithms & DS**
 
-## How to Run
+## 💡 Concepts Covered
+- Control Flow (`if`/`else`)
+- Object-Oriented Programming (Classes)
+- Functions & Modular Code
 
+## 💻 Source Code
+The core logic of this project is implemented in Python. You can view the raw source code in [`188_disk_usage_tree_analyzer.py`](./188_disk_usage_tree_analyzer.py).
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 188_disk_usage_tree_analyzer.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Disk Usage Tree Analyzer in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**

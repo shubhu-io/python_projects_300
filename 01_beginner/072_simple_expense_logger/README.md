@@ -1,20 +1,30 @@
-# Simple Expense Logger
+# 🚀 Simple Expense Logger
 
-## Description
+## 📝 Description
 Log expenses to a text file.
 
-## Concepts Used
-- Conditions
-- Dictionaries/Sets
-- File Handling
-- Functions
-- Input/Output
-- Loops
-- Modules/Libraries
-- Variables
+### 🎯 Category
+**CLI & Utilities**
 
-## How to Run
+## 💡 Concepts Covered
+- Control Flow (`if`/`else`)
+- Functions & Modular Code
+- Error Handling (`try`/`except`)
+- User Input
+- Module Importing
 
+## 💻 Source Code
+The core logic of this project is implemented in Python. You can view the raw source code in [`072_simple_expense_logger.py`](./072_simple_expense_logger.py).
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 072_simple_expense_logger.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Simple Expense Logger in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**
