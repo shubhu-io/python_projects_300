@@ -3,6 +3,7 @@
 ![Python Version](https://img.shields.io/badge/Python-3.x-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-success.svg)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/T7W323SDIF)
 
 Welcome to the ultimate collection of **300 Python Projects**! This repository is designed to take you from a complete beginner to an advanced Python developer through hands-on, practical coding exercises. 
 
