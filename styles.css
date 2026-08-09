@@ -571,7 +571,13 @@ body {
     background: var(--primary-hover);
 }
 
+pre {
+    margin: 0;
+    overflow-x: auto;
+}
+
 pre code {
+    display: block;
     font-family: 'Fira Code', monospace;
     font-size: 0.85rem;
     padding: 20px !important;
