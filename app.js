@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Automatically respond
             if (navigator.serviceWorker.controller) {
                 navigator.serviceWorker.controller.postMessage({
-                    type: 'INPUT_RESPONSE',
+                    type: 'INPUT_PROVIDED',
                     id: requestId,
                     text: text
                 });
