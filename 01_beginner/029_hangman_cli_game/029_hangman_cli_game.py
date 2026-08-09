@@ -24,7 +24,11 @@ def run_project_29():
             print("Congratulations! You guessed the word!")
             return True
             
-        guess = input("Guess a letter: ").strip().lower()
+        try:
+            guess = input("Guess a letter: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            break
+
         if not guess or len(guess) != 1 or not guess.isalpha():
             print("Please enter a single valid letter.")
             continue

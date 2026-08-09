@@ -22,7 +22,7 @@ def run_project_62():
                 timer = f"23:59:{sec:02d}"
                 
             print(f"\r{timer}", end="", flush=True)
-            time.sleep(1)
+            time.sleep(0.05)
             
         print("\n\nSimulation complete.")
         return True

@@ -28,6 +28,9 @@ def run_project_3():
                 break
         except ValueError:
             print("Please enter a valid integer.")
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting game.")
+            break
             
     return True
 

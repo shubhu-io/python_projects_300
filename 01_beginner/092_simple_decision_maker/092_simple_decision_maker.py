@@ -14,7 +14,10 @@ def run_project_92():
     options = []
     
     while True:
-        opt = input("Option: ").strip()
+        try:
+            opt = input("Option: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            break
         if opt.lower() == 'done':
             break
         if opt:

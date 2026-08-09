@@ -58,6 +58,10 @@ builtins.input = _custom_input
 initPyodide();
 
 self.addEventListener("message", async (e) => {
+    if (e.data.type === "keypress") {
+        self.lastKeyPressed = e.data.key;
+        return;
+    }
     if (e.data.type === "runCode") {
         if (!pyodide) {
             postMessage({ type: "stderr", text: "Python engine not loaded yet.\n" });
@@ -65,6 +69,7 @@ self.addEventListener("message", async (e) => {
             return;
         }
         try {
+            await pyodide.loadPackagesFromImports(e.data.code);
             await pyodide.runPythonAsync(e.data.code);
             postMessage({ type: "done" });
         } catch (err) {

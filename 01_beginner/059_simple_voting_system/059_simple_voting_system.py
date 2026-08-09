@@ -16,7 +16,10 @@ def run_project_59():
     print("Type 'results' to end voting and see results.\n")
     
     while True:
-        vote = input("Vote for a candidate: ").strip().title()
+        try:
+            vote = input("Vote for a candidate: ").strip().title()
+        except (EOFError, KeyboardInterrupt):
+            break
         
         if vote.lower() == 'results':
             break

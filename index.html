@@ -56,6 +56,7 @@
 
             <!-- Hero Action Buttons -->
             <div class="hero-actions">
+                <button id="theme-toggle" class="hero-btn theme-toggle-btn" title="Toggle Theme">🌙 Dark</button>
                 <a href="#explore" class="hero-btn primary-btn">⚡ Explore Projects</a>
                 <a href="https://github.com/shubhu-io/python_projects_300" target="_blank" rel="noopener" class="hero-btn outline-btn">🐙 GitHub Repo</a>
                 <a href="https://ko-fi.com/T7W323SDIF" target="_blank" rel="noopener" class="hero-btn kofi-btn">☕ Support Project</a>
@@ -69,7 +70,8 @@
         <aside class="sidebar">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="search-input" placeholder="Search by number, title, tag, concept..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="Search by number, title, tag, code, concept..." autocomplete="off">
+                <button id="clear-search-btn" class="clear-search-btn" style="display: none;" title="Clear search">✖</button>
             </div>
 
             <div class="filter-section">
@@ -183,6 +185,7 @@
                             <div class="code-actions">
                                 <button class="run-btn" id="run-code-btn" disabled>⏳ Loading Python...</button>
                                 <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                                <button class="copy-btn" id="download-code-btn">📥 Download .py</button>
                             </div>
                         </div>
                         <pre><code class="language-python" id="modal-code-block"></code></pre>
@@ -206,6 +209,7 @@
                                 <span class="dot max-dot"></span>
                             </div>
                             <span class="terminal-title">bash - python_execution</span>
+                            <span id="exec-timer-badge" class="exec-timer-badge" style="display: none;">⚡ 0ms</span>
                             <button class="clear-terminal-btn" id="clear-terminal-btn">🧹 Clear</button>
                         </div>
                         <pre class="terminal-output" id="terminal-output"></pre>

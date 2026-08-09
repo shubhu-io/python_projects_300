@@ -40,6 +40,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminalContainer = document.getElementById("terminal-container");
     const terminalOutput = document.getElementById("terminal-output");
     const clearTerminalBtn = document.getElementById("clear-terminal-btn");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const downloadCodeBtn = document.getElementById("download-code-btn");
+    const execTimerBadge = document.getElementById("exec-timer-badge");
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    let executionStartTime = 0;
+
+    // Theme Management
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.body.dataset.theme = savedTheme;
+    if (themeToggleBtn) {
+        themeToggleBtn.textContent = savedTheme === "light" ? "☀️ Light" : "🌙 Dark";
+        themeToggleBtn.addEventListener("click", () => {
+            const current = document.body.dataset.theme === "light" ? "dark" : "light";
+            document.body.dataset.theme = current;
+            localStorage.setItem("theme", current);
+            themeToggleBtn.textContent = current === "light" ? "☀️ Light" : "🌙 Dark";
+        });
+    }
+
+    // Search Highlight Helper
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlightText(text, query) {
+        if (!query || !text) return text;
+        const regex = new RegExp(`(${escapeRegExp(query.trim())})`, 'gi');
+        return text.replace(regex, '<mark class="highlight-match">$1</mark>');
+    }
 
     const userInputSection = document.getElementById("user-input-section");
     const dynamicInputsContainer = document.getElementById("dynamic-inputs");
@@ -80,7 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 runCodeBtn.textContent = "▶ Run Code";
                 runCodeBtn.disabled = false;
             } else if (data.type === 'stdout') {
-                terminalOutput.textContent += data.text;
+                if (data.text.includes('\x1bc')) {
+                    terminalOutput.textContent = data.text.replace(/\x1bc/g, '');
+                } else {
+                    terminalOutput.textContent += data.text;
+                }
                 terminalOutput.scrollTop = terminalOutput.scrollHeight;
             } else if (data.type === 'stderr') {
                 if (!terminalOutput.innerHTML.includes('PYTHON ERROR')) {
@@ -92,6 +125,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 isExecuting = false;
                 runCodeBtn.disabled = false;
                 runCodeBtn.textContent = "▶ Run Code";
+                const dynamicSubmitBtn = document.getElementById("dynamic-submit-btn");
+                if (dynamicSubmitBtn) {
+                    dynamicSubmitBtn.disabled = false;
+                    dynamicSubmitBtn.innerHTML = "▶ Submit & Run Code";
+                    dynamicSubmitBtn.style.opacity = "1";
+                    dynamicSubmitBtn.style.cursor = "pointer";
+                }
+
+                if (executionStartTime && execTimerBadge) {
+                    const elapsedMs = Math.round(performance.now() - executionStartTime);
+                    execTimerBadge.textContent = `⚡ ${elapsedMs}ms`;
+                    execTimerBadge.style.display = "inline-block";
+                }
+
                 terminalOutput.textContent += "\n>>> Execution Completed.\n";
                 terminalOutput.scrollTop = terminalOutput.scrollHeight;
             }
@@ -125,20 +172,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Create interactive prompt fallback inside the terminal
-        const inputField = document.createElement("span");
-        inputField.contentEditable = "true";
+        const inputField = document.createElement("input");
+        inputField.type = "text";
         inputField.className = "terminal-input-active";
+        inputField.autocomplete = "off";
         
         terminalOutput.appendChild(inputField);
         inputField.focus();
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
 
         inputField.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
-                const text = inputField.textContent;
-                inputField.contentEditable = "false";
-                inputField.className = "";
-                terminalOutput.appendChild(document.createTextNode("\n"));
+                const text = inputField.value;
+                inputField.remove();
+                terminalOutput.appendChild(document.createTextNode(text + "\n"));
                 
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
@@ -222,11 +270,58 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function updateCategoryCounts() {
+        const filteredForCats = allProjects.filter(p => {
+            const diffMatch = currentDifficulty === "all" || p.difficulty.toLowerCase() === currentDifficulty.toLowerCase();
+            
+            let specialMatch = true;
+            if (currentSpecialFilter === "featured") specialMatch = p.featured === true;
+            else if (currentSpecialFilter === "input") specialMatch = p.requiresInput === true;
+            else if (currentSpecialFilter === "compatible") specialMatch = p.browserCompatibility === "compatible";
+
+            const q = searchQuery.toLowerCase();
+            const searchMatch = !q || 
+                String(p.id).includes(q) ||
+                p.title.toLowerCase().includes(q) ||
+                p.description.toLowerCase().includes(q) ||
+                p.filename.toLowerCase().includes(q) ||
+                (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
+                (p.code && p.code.toLowerCase().includes(q));
+
+            return diffMatch && specialMatch && searchMatch;
+        });
+
+        const counts = {};
+        filteredForCats.forEach(p => {
+            counts[p.category] = (counts[p.category] || 0) + 1;
+        });
+
+        document.querySelectorAll(".cat-btn").forEach(btn => {
+            if (btn.dataset.category === "all") {
+                const badge = btn.querySelector(".count-badge");
+                if (badge) badge.textContent = filteredForCats.length;
+            } else {
+                const cat = btn.dataset.category;
+                const count = counts[cat] || 0;
+                const badge = btn.querySelector(".count-badge");
+                if (badge) badge.textContent = count;
+                
+                if (count === 0 && currentCategory !== cat) {
+                    btn.style.opacity = "0.4";
+                    btn.style.pointerEvents = "none";
+                } else {
+                    btn.style.opacity = "1";
+                    btn.style.pointerEvents = "auto";
+                }
+            }
+        });
+    }
+
     function renderFeaturedProjects() {
         if (!featuredGrid) return;
         const featuredList = allProjects.filter(p => p.featured === true);
         
-        if (featuredList.length === 0) {
+                if (featuredList.length === 0) {
             featuredSection.style.display = "none";
             return;
         }
@@ -235,6 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
         featuredGrid.innerHTML = featuredList.map(p => {
             const formattedId = String(p.id).padStart(3, '0');
             const diffClass = `diff-${p.difficulty.toLowerCase()}`;
+            const highlightedTitle = highlightText(p.title, searchQuery);
+            const highlightedDesc = highlightText(p.description, searchQuery);
             return `
                 <div class="featured-card" data-id="${p.id}">
                     <div>
@@ -242,8 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span class="featured-badge">⭐ Featured</span>
                             <span class="diff-badge ${diffClass}">${p.difficulty}</span>
                         </div>
-                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px;">#${formattedId}: ${p.title}</h4>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${p.description}</p>
+                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px;">#${formattedId}: ${highlightedTitle}</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">${highlightedDesc}</p>
                     </div>
                     <button class="view-code-btn" style="align-self: flex-start; margin-top: 8px;">View Project &rarr;</button>
                 </div>
@@ -280,7 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 p.title.toLowerCase().includes(q) ||
                 p.description.toLowerCase().includes(q) ||
                 p.filename.toLowerCase().includes(q) ||
-                (p.tags && p.tags.some(t => t.toLowerCase().includes(q)));
+                (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
+                (p.code && p.code.toLowerCase().includes(q));
 
             return diffMatch && catMatch && specialMatch && searchMatch;
         }).sort((a, b) => {
@@ -294,6 +392,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderProjects() {
         const filtered = filterProjects();
         visibleCountEl.textContent = filtered.length;
+        
+        updateCategoryCounts();
 
         if (filtered.length === 0) {
             projectsGrid.innerHTML = `
@@ -310,20 +410,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const tagsHtml = p.tags ? p.tags.map(t => `<span class="tag">#${t}</span>`).join("") : "";
             const formattedId = String(p.id).padStart(3, '0');
             const compatBadge = p.browserCompatibility === "compatible" ? `<span class="compat-badge compat-compatible">💻 Ready</span>` : (p.browserCompatibility === "limited" ? `<span class="compat-badge compat-limited">⚠️ Limited</span>` : `<span class="compat-badge compat-terminal_only">🖥️ Terminal</span>`);
+            const highlightedTitle = highlightText(p.title, searchQuery);
+            const highlightedDesc = highlightText(p.description, searchQuery);
 
             return `
                 <div class="project-card" data-id="${p.id}">
-                    <div class="card-top">
-                        <span class="project-id-badge">#${formattedId}</span>
+                    <div class="card-header">
+                        <span class="project-id">#${formattedId}</span>
                         <div style="display: flex; gap: 6px;">
                             ${compatBadge}
                             <span class="diff-badge ${diffClass}">${p.difficulty}</span>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="card-title">${p.title}</h3>
-                        <p class="card-desc">${p.description}</p>
-                    </div>
+                    <h3 class="project-title">${highlightedTitle}</h3>
+                    <p class="project-desc">${highlightedDesc}</p>
                     <div class="card-tags">
                         ${tagsHtml}
                     </div>
@@ -428,6 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Single Submit & Run button inside input form
             const submitBtn = document.createElement("button");
             submitBtn.className = "input-submit-btn";
+            submitBtn.id = "dynamic-submit-btn";
             submitBtn.innerHTML = "▶ Submit & Run Code";
             submitBtn.addEventListener("click", () => {
                 executeProgram();
@@ -484,10 +585,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const codeText = modalCodeBlock.textContent;
         terminalContainer.style.display = "flex";
         terminalOutput.textContent = "Executing...\n\n";
+        if (execTimerBadge) {
+            execTimerBadge.style.display = "none";
+        }
+        executionStartTime = performance.now();
         
         isExecuting = true;
         runCodeBtn.disabled = true;
         runCodeBtn.textContent = "⏳ Running...";
+        const dynamicSubmitBtn = document.getElementById("dynamic-submit-btn");
+        if (dynamicSubmitBtn) {
+            dynamicSubmitBtn.disabled = true;
+            dynamicSubmitBtn.innerHTML = "⏳ Running...";
+            dynamicSubmitBtn.style.opacity = "0.7";
+            dynamicSubmitBtn.style.cursor = "not-allowed";
+        }
 
         pythonWorker.postMessage({ type: "runCode", code: codeText });
     }
@@ -524,15 +636,59 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Download Code (.py)
+    if (downloadCodeBtn) {
+        downloadCodeBtn.addEventListener("click", () => {
+            if (!activeProject || !activeProject.code) return;
+            const blob = new Blob([activeProject.code], { type: "text/x-python;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = activeProject.filename || `project_${activeProject.id}.py`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
+
     // Run Code Listener for Header button
     runCodeBtn.addEventListener("click", () => {
         executeProgram();
     });
 
+    // Clear Search Listener
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener("click", () => {
+            searchInput.value = "";
+            searchQuery = "";
+            clearSearchBtn.style.display = "none";
+            renderProjects();
+        });
+    }
+
     // Search Listener
     searchInput.addEventListener("input", (e) => {
         searchQuery = e.target.value;
+        if (clearSearchBtn) {
+            clearSearchBtn.style.display = searchQuery ? "flex" : "none";
+        }
         renderProjects();
+    });
+
+    // Real-Time Keyboard Input Listener for Interactive Games (Project 116)
+    document.addEventListener("keydown", (e) => {
+        if (!isExecuting || !codeModal.classList.contains("active")) return;
+        if (activeProject && (activeProject.id === 116 || activeProject.filename.includes("snake"))) {
+            const key = e.key;
+            const validKeys = ["w", "a", "s", "d", "p", "r", "q", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+            if (validKeys.includes(key.toLowerCase()) || key.startsWith("Arrow")) {
+                e.preventDefault();
+                if (pythonWorker) {
+                    pythonWorker.postMessage({ type: "keypress", key: key });
+                }
+            }
+        }
     });
 
     // Difficulty & Special Pill Listeners

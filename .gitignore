@@ -13,3 +13,10 @@ env/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Test logs and output files
+audit_results.json
+verification_audit.json
+bookmarks.txt
+expenses_log.txt
+my_notes.txt

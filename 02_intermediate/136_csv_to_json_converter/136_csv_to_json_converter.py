@@ -1,23 +1,46 @@
 """
 Project 136: CSV to JSON Converter
 Category: Database & Storage
-Description: Intermediate Python project focusing on CSV to JSON Converter with robust logic and data handling.
+Description: JSON file storage manager with record indexing, searching, serialization, and deserialization.
 """
+import json
 
-class Project136Runner:
+class JSONStorageEngine136:
     def __init__(self):
-        self.name = "CSV to JSON Converter"
-        self.category = "Database & Storage"
+        self.data = {}
 
-    def execute(self) -> dict:
-        return {
-            "project_id": 136,
-            "status": "SUCCESS",
-            "message": f"Successfully ran {self.name}.",
-            "metrics": {"processed": 100, "efficiency": "99.8%"}
-        }
+    def add_item(self, key, value_dict):
+        self.data[key] = value_dict
+        return True
+
+    def search(self, query):
+        query = query.lower()
+        results = {}
+        for k, v in self.data.items():
+            if query in k.lower() or any(query in str(val).lower() for val in v.values()):
+                results[k] = v
+        return results
+
+    def to_json(self):
+        return json.dumps(self.data, indent=2)
+
+def run_project_136():
+    print("=" * 45)
+    print("   PYTHON PROJECT 136: CSV TO JSON CONVERTER")
+    print("=" * 45)
+    
+    storage = JSONStorageEngine136()
+    storage.add_item("Alice Smith", {"email": "alice@example.com", "role": "Developer"})
+    storage.add_item("Bob Jones", {"email": "bob@example.com", "role": "Designer"})
+    
+    print("\nStored JSON Document:")
+    print(storage.to_json())
+    
+    print("\nSearching for 'Developer':")
+    matches = storage.search("Developer")
+    for k, v in matches.items():
+        print(f"  Found: {k} -> {v}")
+    return True
 
 if __name__ == "__main__":
-    runner = Project136Runner()
-    res = runner.execute()
-    print("Execution Result:", res)
+    run_project_136()

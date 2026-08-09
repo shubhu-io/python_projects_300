@@ -16,7 +16,10 @@ def run_project_99():
     print("Type 'done' when finished.")
     
     while True:
-        name = input("Name: ").strip().title()
+        try:
+            name = input("Name: ").strip().title()
+        except (EOFError, KeyboardInterrupt):
+            break
         if name.lower() == 'done':
             break
             
