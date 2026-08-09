@@ -8,6 +8,16 @@ Welcome to the ultimate collection of **300 Python Projects**! This repository i
 
 Every single project is self-contained in its own directory with a dedicated `README.md` explaining the concepts used and instructions on how to run it.
 
+### 🌐 Interactive Web Explorer
+Don't want to clone the repo just yet? You can explore all 300 projects directly in your browser!
+👉 **[View the Live Explorer](https://shubhu-io.github.io/python_projects_300/)**
+
+The web explorer allows you to:
+- Filter projects by difficulty and category.
+- Search for specific topics or keywords.
+- View the complete Python source code with syntax highlighting without downloading anything.
+- Copy code directly to your clipboard.
+
 ---
 
 ## 📂 Repository Structure
