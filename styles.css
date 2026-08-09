@@ -677,7 +677,8 @@ pre code {
     padding: 16px;
     max-height: 300px;
     overflow-y: auto;
-    white-space: pre-wrap;
+    overflow-x: auto;
+    white-space: pre;
     margin: 0;
 }
 
