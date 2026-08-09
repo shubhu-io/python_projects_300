@@ -8,11 +8,38 @@ Capitalize the first letter of each word in a sentence.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`035_capitalize_sentence_tool.py`](./035_capitalize_sentence_tool.py).
+```python
+"""
+Project 035: Capitalize Sentence Tool
+Category: Text & Strings
+Description: Capitalize the first letter of each word in a sentence.
+"""
+
+def run_project_35():
+    print("=" * 45)
+    print("   PYTHON PROJECT 035: CAPITALIZE SENTENCE")
+    print("=" * 45)
+    
+    text = input("Enter a sentence: ").strip()
+    
+    if not text:
+        print("Empty string provided.")
+        return False
+        
+    # Titlecase capitalizes first letter of each word
+    result = text.title()
+    
+    print("\n--- Result ---")
+    print(result)
+    return True
+
+if __name__ == "__main__":
+    run_project_35()
+```
 
 ## 🏃‍♂️ How to Run
 

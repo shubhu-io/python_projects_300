@@ -8,12 +8,41 @@ Calculate tax based on a flat rate.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- Error Handling (`try`/`except`)
 - Functions & Modular Code
+- Error Handling (`try`/`except`)
 - User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`055_simple_tax_calculator.py`](./055_simple_tax_calculator.py).
+```python
+"""
+Project 055: Simple Tax Calculator
+Category: Finance & Utilities
+Description: Calculate tax based on a flat rate.
+"""
+
+def run_project_55():
+    print("=" * 45)
+    print("      PYTHON PROJECT 055: TAX CALCULATOR")
+    print("=" * 45)
+    
+    try:
+        income = float(input("Enter your income: $"))
+        tax_rate = float(input("Enter tax rate percentage (e.g., 20 for 20%): "))
+        
+        tax_amount = income * (tax_rate / 100)
+        net_income = income - tax_amount
+        
+        print(f"\nGross Income: ${income:.2f}")
+        print(f"Tax Amount: ${tax_amount:.2f}")
+        print(f"Net Income: ${net_income:.2f}")
+        return True
+    except ValueError:
+        print("Invalid input.")
+        return False
+
+if __name__ == "__main__":
+    run_project_55()
+```
 
 ## 🏃‍♂️ How to Run
 

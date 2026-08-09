@@ -8,12 +8,48 @@ Calculate tip amount and total bill per person.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- Error Handling (`try`/`except`)
 - Functions & Modular Code
+- Error Handling (`try`/`except`)
 - User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`028_bill_and_tip_calculator.py`](./028_bill_and_tip_calculator.py).
+```python
+"""
+Project 028: Bill and Tip Calculator
+Category: Utilities
+Description: Calculate tip amount and total bill per person.
+"""
+
+def run_project_28():
+    print("=" * 45)
+    print("    PYTHON PROJECT 028: BILL & TIP CALCULATOR")
+    print("=" * 45)
+    
+    try:
+        bill = float(input("Enter the total bill amount: $"))
+        tip_pct = float(input("Enter tip percentage (e.g., 15): "))
+        people = int(input("How many people are splitting the bill? "))
+        
+        if people <= 0:
+            print("Number of people must be at least 1.")
+            return False
+            
+        tip_amount = bill * (tip_pct / 100)
+        total = bill + tip_amount
+        per_person = total / people
+        
+        print(f"\nTotal Tip: ${tip_amount:.2f}")
+        print(f"Total Bill: ${total:.2f}")
+        print(f"Amount per person: ${per_person:.2f}")
+        
+        return True
+    except ValueError:
+        print("Invalid input.")
+        return False
+
+if __name__ == "__main__":
+    run_project_28()
+```
 
 ## 🏃‍♂️ How to Run
 

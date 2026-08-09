@@ -7,14 +7,51 @@ A basic CLI flashcard tool.
 **Utilities & Games**
 
 ## 💡 Concepts Covered
+- Loops (`for`/`while`)
 - Control Flow (`if`/`else`)
-- Functions & Modular Code
 - User Input
 - Module Importing
-- Loops (`for`/`while`)
+- Functions & Modular Code
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`048_simple_flashcard_quizzer.py`](./048_simple_flashcard_quizzer.py).
+```python
+"""
+Project 048: Simple Flashcard Quizzer
+Category: Utilities & Games
+Description: A basic CLI flashcard tool.
+"""
+import random
+
+def run_project_48():
+    print("=" * 45)
+    print("     PYTHON PROJECT 048: FLASHCARD QUIZZER")
+    print("=" * 45)
+    
+    flashcards = {
+        "Python": "A high-level programming language.",
+        "HTML": "Standard markup language for documents designed to be displayed in a web browser.",
+        "CSS": "Style sheet language used for describing the presentation of a document.",
+        "API": "Application Programming Interface."
+    }
+    
+    keys = list(flashcards.keys())
+    random.shuffle(keys)
+    
+    score = 0
+    for key in keys:
+        print(f"\nTerm: {key}")
+        input("Press Enter to reveal the definition...")
+        print(f"Definition: {flashcards[key]}")
+        correct = input("Did you get it right? (y/n): ").strip().lower()
+        if correct == 'y':
+            score += 1
+            
+    print(f"\nQuiz complete. Score: {score}/{len(flashcards)}")
+    return True
+
+if __name__ == "__main__":
+    run_project_48()
+```
 
 ## 🏃‍♂️ How to Run
 

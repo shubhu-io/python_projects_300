@@ -8,11 +8,34 @@ Convert string to UPPERCASE, lowercase, and Title Case.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`054_text_case_converter.py`](./054_text_case_converter.py).
+```python
+"""
+Project 054: Text Case Converter
+Category: Text & Strings
+Description: Convert string to UPPERCASE, lowercase, and Title Case.
+"""
+
+def run_project_54():
+    print("=" * 45)
+    print("     PYTHON PROJECT 054: TEXT CASE CONVERTER")
+    print("=" * 45)
+    
+    text = input("Enter a string: ")
+    
+    print("\n--- Conversions ---")
+    print(f"UPPERCASE: {text.upper()}")
+    print(f"lowercase: {text.lower()}")
+    print(f"Title Case: {text.title()}")
+    print(f"sWAP cASE: {text.swapcase()}")
+    return True
+
+if __name__ == "__main__":
+    run_project_54()
+```
 
 ## 🏃‍♂️ How to Run
 

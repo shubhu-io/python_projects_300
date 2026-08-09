@@ -8,11 +8,37 @@ Create simple text banners.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`045_ascii_art_banner_generator.py`](./045_ascii_art_banner_generator.py).
+```python
+"""
+Project 045: ASCII Art Banner Generator
+Category: Text & Strings
+Description: Create simple text banners.
+"""
+
+def run_project_45():
+    print("=" * 45)
+    print("    PYTHON PROJECT 045: ASCII ART BANNER")
+    print("=" * 45)
+    
+    text = input("Enter text for the banner: ").strip()
+    
+    if not text:
+        return False
+        
+    width = len(text) + 6
+    print("\n" + "=" * width)
+    print(f"== {text} ==")
+    print("=" * width + "\n")
+    
+    return True
+
+if __name__ == "__main__":
+    run_project_45()
+```
 
 ## 🏃‍♂️ How to Run
 

@@ -8,12 +8,49 @@ Convert between kilograms, pounds, and ounces.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- Error Handling (`try`/`except`)
 - Functions & Modular Code
+- Error Handling (`try`/`except`)
 - User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`047_weight_unit_converter.py`](./047_weight_unit_converter.py).
+```python
+"""
+Project 047: Weight Unit Converter
+Category: Utilities
+Description: Convert between kilograms, pounds, and ounces.
+"""
+
+def run_project_47():
+    print("=" * 45)
+    print("     PYTHON PROJECT 047: WEIGHT CONVERTER")
+    print("=" * 45)
+    
+    print("1. Kilograms to Pounds")
+    print("2. Pounds to Kilograms")
+    
+    choice = input("Select an option (1/2): ").strip()
+    
+    try:
+        val = float(input("Enter weight: "))
+        
+        if choice == '1':
+            res = val * 2.20462
+            print(f"{val} kg = {res:.2f} lbs")
+        elif choice == '2':
+            res = val / 2.20462
+            print(f"{val} lbs = {res:.2f} kg")
+        else:
+            print("Invalid choice.")
+            return False
+            
+        return True
+    except ValueError:
+        print("Invalid input.")
+        return False
+
+if __name__ == "__main__":
+    run_project_47()
+```
 
 ## 🏃‍♂️ How to Run
 

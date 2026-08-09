@@ -8,12 +8,40 @@ Enhanced greeting generator with time-based greetings.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
 - Module Importing
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`001_hello_world_plus.py`](./001_hello_world_plus.py).
+```python
+"""
+Project 001: Hello World Plus
+Category: CLI & Utilities
+Description: Enhanced greeting generator with time-based greetings.
+"""
+import datetime
+
+def run_project_1():
+    print("=" * 45)
+    print("       PYTHON PROJECT 001: HELLO WORLD PLUS")
+    print("=" * 45)
+    
+    name = input("Enter your name: ").strip()
+    hour = datetime.datetime.now().hour
+    
+    if hour < 12:
+        greeting = "Good morning"
+    elif hour < 18:
+        greeting = "Good afternoon"
+    else:
+        greeting = "Good evening"
+        
+    print(f"\n{greeting}, {name}! Welcome to your Python journey.")
+    return True
+
+if __name__ == "__main__":
+    run_project_1()
+```
 
 ## 🏃‍♂️ How to Run
 

@@ -8,12 +8,48 @@ Play the classic game against the computer.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
 - Module Importing
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`010_rock_paper_scissors.py`](./010_rock_paper_scissors.py).
+```python
+"""
+Project 010: Rock Paper Scissors
+Category: Games
+Description: Play the classic game against the computer.
+"""
+import random
+
+def run_project_10():
+    print("=" * 45)
+    print("    PYTHON PROJECT 010: ROCK PAPER SCISSORS")
+    print("=" * 45)
+    
+    choices = ['rock', 'paper', 'scissors']
+    
+    user = input("Choose rock, paper, or scissors: ").strip().lower()
+    if user not in choices:
+        print("Invalid choice. Must be rock, paper, or scissors.")
+        return False
+        
+    comp = random.choice(choices)
+    print(f"Computer chose: {comp}")
+    
+    if user == comp:
+        print("It's a tie!")
+    elif (user == 'rock' and comp == 'scissors') or \
+         (user == 'paper' and comp == 'rock') or \
+         (user == 'scissors' and comp == 'paper'):
+        print("You win!")
+    else:
+        print("Computer wins!")
+        
+    return True
+
+if __name__ == "__main__":
+    run_project_10()
+```
 
 ## 🏃‍♂️ How to Run
 

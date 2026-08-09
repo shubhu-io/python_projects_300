@@ -7,14 +7,52 @@ A basic voting poll application.
 **CLI & Utilities**
 
 ## 💡 Concepts Covered
-- Control Flow (`if`/`else`)
-- Functions & Modular Code
-- User Input
 - Loops (`for`/`while`)
+- Control Flow (`if`/`else`)
+- User Input
+- Functions & Modular Code
 - Comprehensions
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`059_simple_voting_system.py`](./059_simple_voting_system.py).
+```python
+"""
+Project 059: Simple Voting System
+Category: CLI & Utilities
+Description: A basic voting poll application.
+"""
+
+def run_project_59():
+    print("=" * 45)
+    print("      PYTHON PROJECT 059: SIMPLE VOTING SYS")
+    print("=" * 45)
+    
+    candidates = ["Alice", "Bob", "Charlie"]
+    votes = {c: 0 for c in candidates}
+    
+    print("Candidates:", ", ".join(candidates))
+    print("Type 'results' to end voting and see results.\n")
+    
+    while True:
+        vote = input("Vote for a candidate: ").strip().title()
+        
+        if vote.lower() == 'results':
+            break
+            
+        if vote in candidates:
+            votes[vote] += 1
+            print("Vote counted.")
+        else:
+            print("Invalid candidate.")
+            
+    print("\n--- Voting Results ---")
+    for c, v in votes.items():
+        print(f"{c}: {v} vote(s)")
+        
+    return True
+
+if __name__ == "__main__":
+    run_project_59()
+```
 
 ## 🏃‍♂️ How to Run
 

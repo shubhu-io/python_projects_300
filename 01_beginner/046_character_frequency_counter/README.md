@@ -8,12 +8,39 @@ Count frequency of each character in a string.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
 - Loops (`for`/`while`)
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`046_character_frequency_counter.py`](./046_character_frequency_counter.py).
+```python
+"""
+Project 046: Character Frequency Counter
+Category: Text & Strings
+Description: Count frequency of each character in a string.
+"""
+
+def run_project_46():
+    print("=" * 45)
+    print("   PYTHON PROJECT 046: CHAR FREQUENCY COUNTER")
+    print("=" * 45)
+    
+    text = input("Enter a string: ")
+    freq = {}
+    
+    for char in text:
+        if char.strip(): # Ignore spaces for display, or count them if desired
+            freq[char] = freq.get(char, 0) + 1
+            
+    print("\n--- Frequency ---")
+    for char, count in sorted(freq.items()):
+        print(f"'{char}': {count}")
+        
+    return True
+
+if __name__ == "__main__":
+    run_project_46()
+```
 
 ## 🏃‍♂️ How to Run
 

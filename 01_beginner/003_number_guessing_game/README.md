@@ -7,15 +7,51 @@ User guesses a randomly generated number.
 **Games**
 
 ## 💡 Concepts Covered
+- Loops (`for`/`while`)
 - Control Flow (`if`/`else`)
-- Functions & Modular Code
-- Error Handling (`try`/`except`)
 - User Input
 - Module Importing
-- Loops (`for`/`while`)
+- Functions & Modular Code
+- Error Handling (`try`/`except`)
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`003_number_guessing_game.py`](./003_number_guessing_game.py).
+```python
+"""
+Project 003: Number Guessing Game
+Category: Games
+Description: User guesses a randomly generated number.
+"""
+import random
+
+def run_project_3():
+    print("=" * 45)
+    print("     PYTHON PROJECT 003: NUMBER GUESSING")
+    print("=" * 45)
+    
+    target = random.randint(1, 100)
+    attempts = 0
+    
+    print("I'm thinking of a number between 1 and 100.")
+    while True:
+        try:
+            guess = int(input("Your guess: "))
+            attempts += 1
+            
+            if guess < target:
+                print("Too low!")
+            elif guess > target:
+                print("Too high!")
+            else:
+                print(f"Congratulations! You guessed it in {attempts} attempts.")
+                break
+        except ValueError:
+            print("Please enter a valid integer.")
+            
+    return True
+
+if __name__ == "__main__":
+    run_project_3()
+```
 
 ## 🏃‍♂️ How to Run
 

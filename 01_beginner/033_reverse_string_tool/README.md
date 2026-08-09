@@ -8,11 +8,34 @@ Reverse a given string.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- User Input
 - Functions & Modular Code
+- User Input
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`033_reverse_string_tool.py`](./033_reverse_string_tool.py).
+```python
+"""
+Project 033: Reverse String Tool
+Category: Text & Strings
+Description: Reverse a given string.
+"""
+
+def run_project_33():
+    print("=" * 45)
+    print("      PYTHON PROJECT 033: REVERSE STRING")
+    print("=" * 45)
+    
+    text = input("Enter a string to reverse: ")
+    
+    reversed_text = text[::-1]
+    
+    print("\n--- Result ---")
+    print(f"Original: {text}")
+    print(f"Reversed: {reversed_text}")
+    return True
+
+if __name__ == "__main__":
+    run_project_33()
+```
 
 ## 🏃‍♂️ How to Run
 

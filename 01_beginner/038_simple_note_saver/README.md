@@ -8,13 +8,46 @@ Save short notes to a text file.
 
 ## 💡 Concepts Covered
 - Control Flow (`if`/`else`)
-- Functions & Modular Code
-- Error Handling (`try`/`except`)
 - User Input
 - Module Importing
+- Functions & Modular Code
+- Error Handling (`try`/`except`)
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`038_simple_note_saver.py`](./038_simple_note_saver.py).
+```python
+"""
+Project 038: Simple Note Saver
+Category: File Handling
+Description: Save short notes to a text file.
+"""
+import os
+
+def run_project_38():
+    print("=" * 45)
+    print("      PYTHON PROJECT 038: SIMPLE NOTE SAVER")
+    print("=" * 45)
+    
+    filename = "my_notes.txt"
+    
+    print("Enter your note (or type 'EXIT' to quit):")
+    note = input("> ")
+    
+    if note.strip().upper() == 'EXIT':
+        print("Cancelled.")
+        return True
+        
+    try:
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write(note + "\n")
+        print(f"\nNote saved to {filename} successfully.")
+        return True
+    except Exception as e:
+        print(f"Failed to save note: {e}")
+        return False
+
+if __name__ == "__main__":
+    run_project_38()
+```
 
 ## 🏃‍♂️ How to Run
 

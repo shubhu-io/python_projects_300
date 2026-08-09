@@ -83,7 +83,9 @@ def generate_readme(py_file_path):
 {concepts_bullets}
 
 ## 💻 Source Code
-The core logic of this project is implemented in Python. You can view the raw source code in [`{file_name}`](./{file_name}).
+```python
+{source_code.strip()}
+```
 
 ## 🏃‍♂️ How to Run
 
