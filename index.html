@@ -119,7 +119,15 @@
                 </div>
 
                 <div class="terminal-container" id="terminal-container" style="display: none;">
-                    <div class="terminal-header">Terminal Output</div>
+                    <div class="terminal-header">
+                        <div class="window-controls">
+                            <span class="dot close-dot"></span>
+                            <span class="dot min-dot"></span>
+                            <span class="dot max-dot"></span>
+                        </div>
+                        <span class="terminal-title">bash - python_execution</span>
+                        <button class="clear-terminal-btn" id="clear-terminal-btn">🧹 Clear</button>
+                    </div>
                     <pre class="terminal-output" id="terminal-output"></pre>
                 </div>
             </div>

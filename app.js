@@ -26,6 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const runCodeBtn = document.getElementById("run-code-btn");
     const terminalContainer = document.getElementById("terminal-container");
     const terminalOutput = document.getElementById("terminal-output");
+    const clearTerminalBtn = document.getElementById("clear-terminal-btn");
+
+    if (clearTerminalBtn) {
+        clearTerminalBtn.addEventListener("click", () => {
+            terminalOutput.textContent = "";
+        });
+    }
 
     let pyodideInstance = null;
     let pyodideLoading = false;
