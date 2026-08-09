@@ -29,10 +29,10 @@ async function initPyodide() {
     try {
         pyodide = await loadPyodide({
             stdout: (text) => {
-                postMessage({ type: "stdout", text: text + "\n" });
+                postMessage({ type: "stdout", text: text });
             },
             stderr: (text) => {
-                postMessage({ type: "stderr", text: text + "\n" });
+                postMessage({ type: "stderr", text: text });
             }
         });
 
@@ -40,8 +40,10 @@ async function initPyodide() {
         await pyodide.runPythonAsync(`
 import builtins
 import js
+import sys
 
 def _custom_input(prompt=""):
+    sys.stdout.flush()
     return js.syncInput(prompt)
 
 builtins.input = _custom_input

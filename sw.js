@@ -27,7 +27,7 @@ self.addEventListener('fetch', (event) => {
             });
             
             // Notify clients (main thread) that input is requested
-            self.clients.matchAll().then(clients => {
+            self.clients.matchAll({ includeUncontrolled: true }).then(clients => {
                 clients.forEach(client => {
                     client.postMessage({ type: 'INPUT_REQUESTED', id: id });
                 });
