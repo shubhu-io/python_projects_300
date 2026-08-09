@@ -98,12 +98,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 inputField.className = "";
                 terminalOutput.appendChild(document.createTextNode("\n"));
                 
-                // Send answer back to Service Worker
+                // Send answer back to Service Worker (Robust against hard-refresh null controller)
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
                         type: 'INPUT_PROVIDED',
                         id: requestId,
                         text: text
+                    });
+                } else {
+                    navigator.serviceWorker.ready.then(reg => {
+                        if (reg.active) {
+                            reg.active.postMessage({
+                                type: 'INPUT_PROVIDED',
+                                id: requestId,
+                                text: text
+                            });
+                        }
                     });
                 }
             }
