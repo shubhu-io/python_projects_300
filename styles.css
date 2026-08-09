@@ -577,6 +577,8 @@ pre code {
     padding: 20px !important;
     max-height: 450px;
     overflow-y: auto;
+    overflow-x: auto;
+    white-space: pre;
 }
 
 @media (max-width: 900px) {
