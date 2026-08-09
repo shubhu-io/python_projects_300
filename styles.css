@@ -575,7 +575,6 @@ pre code {
     font-family: 'Fira Code', monospace;
     font-size: 0.85rem;
     padding: 20px !important;
-    max-height: 450px;
     overflow-y: auto;
     overflow-x: auto;
     white-space: pre;
