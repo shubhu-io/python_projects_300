@@ -3,59 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>300 Python Projects Explorer | Interactive Code Hub</title>
+    <title>300 Python Projects | Learn Python by Building 300 Hands-On Projects</title>
+    <meta name="description" content="Master Python by building 300 real-world projects. Complete source code, live browser execution via Pyodide, AST input detection, and documentation.">
+    <meta property="og:title" content="300 Python Projects | Learn Python by Building">
+    <meta property="og:description" content="Explore 300 hands-on Python projects with live browser execution, clean source code, and interactive input tools.">
+    <meta property="og:type" content="website">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Highlight.js for Code Highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 </head>
 <body>
+    <!-- App Header / Hero Section -->
     <header class="app-header">
         <div class="header-container">
-            <div class="logo-group">
+            <div class="hero-brand">
                 <div class="python-logo-badge">🐍</div>
                 <div>
-                    <h1>300 Python Projects</h1>
-                    <p class="subtitle">Complete Source Code, Interactive Explorer & Practice Hub</p>
+                    <h1 class="hero-title">300 Python Projects</h1>
+                    <p class="hero-subtitle">Learn Python by Building 300 Hands-On Projects</p>
                 </div>
             </div>
-            <div style="display: flex; gap: 16px; align-items: center;">
-                <a href='https://ko-fi.com/T7W323SDIF' target='_blank' style='transition: transform 0.2s ease;'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-                <div class="stats-badge">
+
+            <!-- Stats Bar -->
+            <div class="stats-badge">
                 <div class="stat-item">
                     <span class="stat-num" id="stat-total">300</span>
                     <span class="stat-label">Projects</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-num" id="stat-completed">0</span>
-                    <span class="stat-label">Completed</span>
+                    <span class="stat-num" id="stat-beginner">100</span>
+                    <span class="stat-label">Beginner</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-intermediate">100</span>
+                    <span class="stat-label">Intermediate</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-advanced">100</span>
+                    <span class="stat-label">Advanced</span>
                 </div>
             </div>
+
+            <!-- Hero Action Buttons -->
+            <div class="hero-actions">
+                <a href="#explore" class="hero-btn primary-btn">⚡ Explore Projects</a>
+                <a href="https://github.com/shubhu-io/python_projects_300" target="_blank" rel="noopener" class="hero-btn outline-btn">🐙 GitHub Repo</a>
+                <a href="https://ko-fi.com/T7W323SDIF" target="_blank" rel="noopener" class="hero-btn kofi-btn">☕ Support Project</a>
             </div>
         </div>
     </header>
 
-    <main class="main-container">
+    <!-- Main Content Area -->
+    <main class="main-container" id="explore">
         <!-- Sidebar & Filters -->
         <aside class="sidebar">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="search-input" placeholder="Search projects, tags, topics..." autocomplete="off">
+                <input type="text" id="search-input" placeholder="Search by number, title, tag, concept..." autocomplete="off">
             </div>
 
             <div class="filter-section">
-                <h3>Difficulty Level</h3>
+                <h3>Filter Projects</h3>
                 <div class="filter-pills" id="difficulty-filters">
                     <button class="pill active" data-difficulty="all">All (300)</button>
                     <button class="pill pill-beginner" data-difficulty="Beginner">🟢 Beginner (100)</button>
                     <button class="pill pill-intermediate" data-difficulty="Intermediate">🟡 Intermediate (100)</button>
                     <button class="pill pill-advanced" data-difficulty="Advanced">🔴 Advanced (100)</button>
+                    <button class="pill pill-special" data-filter="featured">⭐ Featured</button>
+                    <button class="pill pill-special" data-filter="input">📥 Requires Input</button>
+                    <button class="pill pill-special" data-filter="compatible">💻 Browser Ready</button>
                 </div>
             </div>
 
@@ -66,32 +92,64 @@
                         <span>All Categories</span>
                         <span class="count-badge" id="count-all">300</span>
                     </button>
-                    <!-- Populated dynamically -->
+                    <!-- Populated dynamically via JS -->
                 </div>
             </div>
         </aside>
 
-        <!-- Projects Grid Section -->
-        <section class="content-area">
-            <div class="toolbar">
-                <div class="results-info">
-                    Showing <span id="visible-count">300</span> projects
+        <!-- Right Content Column -->
+        <div class="content-column">
+            <!-- Featured Projects Section -->
+            <section class="featured-section" id="featured-section">
+                <div class="section-title-row">
+                    <h2>⭐ Featured Highlights</h2>
+                    <span class="section-hint">Curated selection of practical projects</span>
                 </div>
-                <div class="sort-group">
-                    <label for="sort-select">Sort by:</label>
-                    <select id="sort-select">
-                        <option value="id-asc">Project # (1 to 100)</option>
-                        <option value="id-desc">Project # (100 to 1)</option>
-                        <option value="title-asc">Title (A-Z)</option>
-                    </select>
+                <div class="featured-grid" id="featured-grid">
+                    <!-- Dynamic Featured Cards -->
                 </div>
-            </div>
+            </section>
 
-            <div class="projects-grid" id="projects-grid">
-                <!-- Project Cards Rendered via JS -->
-            </div>
-        </section>
+            <!-- Projects Grid Section -->
+            <section class="content-area">
+                <div class="toolbar">
+                    <div class="results-info">
+                        Showing <span id="visible-count">300</span> projects
+                    </div>
+                    <div class="sort-group">
+                        <label for="sort-select">Sort by:</label>
+                        <select id="sort-select">
+                            <option value="id-asc">Project # (1 to 300)</option>
+                            <option value="id-desc">Project # (300 to 1)</option>
+                            <option value="title-asc">Title (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Project Cards Rendered via JS -->
+                </div>
+            </section>
+        </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="footer-logo">🐍 300 Python Projects</span>
+                <p>Complete source code & in-browser execution playground. Built for developers & learners.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/shubhu-io/python_projects_300" target="_blank" rel="noopener">GitHub Repository</a>
+                <a href="https://github.com/shubhu-io/python_projects_300/blob/main/README.md" target="_blank" rel="noopener">Documentation</a>
+                <a href="https://ko-fi.com/T7W323SDIF" target="_blank" rel="noopener">☕ Support / Buy Me a Coffee</a>
+            </div>
+            <div class="footer-copyright">
+                © 2026 300 Python Projects Explorer. All code open-source under MIT License.
+            </div>
+        </div>
+    </footer>
 
     <!-- Code Viewer Modal -->
     <div class="modal-overlay" id="code-modal">
@@ -99,9 +157,10 @@
             <div class="modal-header">
                 <div class="modal-title-group">
                     <span class="modal-badge" id="modal-diff-badge">Beginner</span>
+                    <span class="compat-badge" id="modal-compat-badge">💻 Browser Ready</span>
                     <h2 id="modal-project-title">001: Hello World Plus</h2>
                 </div>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
+                <button class="modal-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
             </div>
             <div class="modal-body">
                 <p class="modal-description" id="modal-project-desc">Project description goes here...</p>
@@ -110,26 +169,33 @@
                     <span class="meta-item">📁 <strong id="modal-folder">01_beginner</strong></span>
                     <span class="meta-item">📄 <strong id="modal-filename">001_hello_world_plus.py</strong></span>
                     <div class="tags-row" id="modal-tags"></div>
+                    <div class="modal-links-row">
+                        <a href="#" id="modal-github-link" target="_blank" rel="noopener" class="modal-ext-link">🐙 GitHub Source</a>
+                        <a href="#" id="modal-readme-link" target="_blank" rel="noopener" class="modal-ext-link">📖 Readme</a>
+                    </div>
                 </div>
 
                 <div class="modal-split-view">
+                    <!-- Left Side: Source Code -->
                     <div class="code-container">
                         <div class="code-header">
                             <span>PYTHON SOURCE CODE</span>
                             <div class="code-actions">
-                                <button class="run-btn" id="run-code-btn" disabled>⏳ Loading...</button>
+                                <button class="run-btn" id="run-code-btn" disabled>⏳ Loading Python...</button>
                                 <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
                             </div>
                         </div>
                         <pre><code class="language-python" id="modal-code-block"></code></pre>
                     </div>
 
+                    <!-- Right Side: Execution & Inputs -->
                     <div class="terminal-container" id="terminal-container" style="display: none;">
                         <div id="user-input-section" class="user-input-section" style="display: none;">
                             <div class="input-section-header">
                                 <span class="input-section-title">📥 USER INPUT</span>
-                                <span class="input-section-subtitle">Fill in required values before running</span>
+                                <span class="input-section-subtitle">Required by program before running</span>
                             </div>
+                            <div id="input-validation-msg" class="input-validation-msg" style="display: none;"></div>
                             <div id="dynamic-inputs" class="dynamic-inputs-container"></div>
                         </div>
 
