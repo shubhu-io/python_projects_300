@@ -266,10 +266,12 @@ document.addEventListener("DOMContentLoaded", () => {
         terminalOutput.textContent = "";
 
         codeModal.classList.add("active");
+        document.body.classList.add("modal-open");
     }
 
     function closeModal() {
         codeModal.classList.remove("active");
+        document.body.classList.remove("modal-open");
     }
 
     modalCloseBtn.addEventListener("click", closeModal);

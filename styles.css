@@ -462,9 +462,9 @@ body {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 900px;
-    max-height: 85vh;
+    width: 92vw;
+    max-width: 1100px;
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
@@ -515,6 +515,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex: 1;
+    min-height: 0;
 }
 
 .modal-description {
@@ -584,6 +586,7 @@ pre code {
     overflow-y: auto;
     overflow-x: auto;
     white-space: pre;
+    max-height: 55vh;
 }
 
 @media (max-width: 900px) {
@@ -702,4 +705,17 @@ pre code {
 
 @keyframes blink {
     50% { border-color: transparent; }
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 600px) {
+    .modal-card {
+        width: 95vw;
+    }
+    pre code {
+        max-height: 45vh;
+    }
 }
