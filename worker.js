@@ -14,9 +14,9 @@ self.syncInput = function(promptText) {
     // Generate a unique ID for this input request
     const reqId = Math.random().toString(36).substring(2, 10);
     
-    // Make synchronous HTTP request
+    // Make synchronous HTTP request with relative path for GitHub Pages subpath compatibility
     const req = new XMLHttpRequest();
-    req.open('GET', `/_python_input?id=${reqId}`, false); // false = synchronous
+    req.open('GET', `_python_input?id=${reqId}`, false); // false = synchronous
     req.send(null);
     
     if (req.status === 200) {

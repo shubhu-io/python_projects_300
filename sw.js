@@ -10,7 +10,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
-    if (url.pathname === '/_python_input') {
+    // Use endsWith to support GitHub Pages subpath deployments (e.g. /python_projects_300/_python_input)
+    if (url.pathname.endsWith('_python_input')) {
         const id = url.searchParams.get('id');
         
         event.respondWith(new Promise((resolve) => {
