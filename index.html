@@ -110,9 +110,17 @@
                 <div class="code-container">
                     <div class="code-header">
                         <span>PYTHON SOURCE CODE</span>
-                        <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                        <div class="code-actions">
+                            <button class="run-btn" id="run-code-btn" disabled>⏳ Loading...</button>
+                            <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                        </div>
                     </div>
                     <pre><code class="language-python" id="modal-code-block"></code></pre>
+                </div>
+
+                <div class="terminal-container" id="terminal-container" style="display: none;">
+                    <div class="terminal-header">Terminal Output</div>
+                    <pre class="terminal-output" id="terminal-output"></pre>
                 </div>
             </div>
         </div>
@@ -121,6 +129,7 @@
     <!-- Highlight.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

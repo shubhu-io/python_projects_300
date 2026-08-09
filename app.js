@@ -23,6 +23,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTags = document.getElementById("modal-tags");
     const modalCodeBlock = document.getElementById("modal-code-block");
     const copyCodeBtn = document.getElementById("copy-code-btn");
+    const runCodeBtn = document.getElementById("run-code-btn");
+    const terminalContainer = document.getElementById("terminal-container");
+    const terminalOutput = document.getElementById("terminal-output");
+
+    let pyodideInstance = null;
+    let pyodideLoading = false;
+
+    async function initPyodide() {
+        if (pyodideInstance || pyodideLoading) return;
+        pyodideLoading = true;
+        try {
+            pyodideInstance = await loadPyodide({
+                stdout: (text) => {
+                    terminalOutput.textContent += text + "\n";
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                },
+                stderr: (text) => {
+                    terminalOutput.innerHTML += `<span class="error">${text}</span>\n`;
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                }
+            });
+            runCodeBtn.textContent = "▶ Run Code";
+            runCodeBtn.disabled = false;
+        } catch (err) {
+            console.error("Failed to load Pyodide", err);
+            runCodeBtn.textContent = "Error loading Python";
+        }
+    }
+    
+    // Start loading Pyodide in the background
+    initPyodide();
 
     // Fetch projects_data.json
     fetch("projects_data.json")
@@ -162,6 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
         modalCodeBlock.textContent = proj.code;
         hljs.highlightElement(modalCodeBlock);
 
+        // Reset terminal state
+        terminalContainer.style.display = "none";
+        terminalOutput.textContent = "";
+
         codeModal.classList.add("active");
     }
 
@@ -183,6 +218,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 copyCodeBtn.textContent = "📋 Copy Code";
             }, 2000);
         });
+    });
+
+    // Run Code Listener
+    runCodeBtn.addEventListener("click", async () => {
+        if (!pyodideInstance) return;
+        
+        const codeText = modalCodeBlock.textContent;
+        terminalContainer.style.display = "block";
+        terminalOutput.textContent = "Executing...\n\n";
+        runCodeBtn.disabled = true;
+        runCodeBtn.textContent = "⏳ Running...";
+
+        try {
+            await pyodideInstance.runPythonAsync(codeText);
+            terminalOutput.textContent += "\n>>> Execution Completed.";
+        } catch (err) {
+            terminalOutput.innerHTML += `\n<span class="error">${err.message}</span>`;
+        } finally {
+            runCodeBtn.disabled = false;
+            runCodeBtn.textContent = "▶ Run Code";
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
     });
 
     // Search Input Listener
