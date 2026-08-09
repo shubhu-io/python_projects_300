@@ -1,18 +1,61 @@
-# Factorial Calculator
+# 🚀 Factorial Calculator
 
-## Description
+## 📝 Description
 Calculate the factorial of a given number.
 
-## Concepts Used
-- Conditions
-- Dictionaries/Sets
-- Functions
-- Input/Output
-- Loops
-- Variables
+### 🎯 Category
+**Math & Logic**
 
-## How to Run
+## 💡 Concepts Covered
+- Loops (`for`/`while`)
+- Control Flow (`if`/`else`)
+- User Input
+- Functions & Modular Code
+- Error Handling (`try`/`except`)
 
+## 💻 Source Code
+```python
+"""
+Project 031: Factorial Calculator
+Category: Math & Logic
+Description: Calculate the factorial of a given number.
+"""
+
+def run_project_31():
+    print("=" * 45)
+    print("    PYTHON PROJECT 031: FACTORIAL CALCULATOR")
+    print("=" * 45)
+    
+    try:
+        num = int(input("Enter a non-negative integer: "))
+        
+        if num < 0:
+            print("Factorial is not defined for negative numbers.")
+            return False
+            
+        result = 1
+        for i in range(1, num + 1):
+            result *= i
+            
+        print(f"\n{num}! = {result}")
+        return True
+    except ValueError:
+        print("Invalid input. Please enter an integer.")
+        return False
+
+if __name__ == "__main__":
+    run_project_31()
+```
+
+## 🏃‍♂️ How to Run
+
+### Option 1: Run Locally
+If you have Python installed on your computer, you can run this project directly from your terminal:
 ```bash
 python 031_factorial_calculator.py
 ```
+
+### Option 2: Run in Browser
+You don't need to install anything to try this out! You can execute this code directly in your browser using our Interactive Web Explorer.
+
+👉 **[Launch Factorial Calculator in Web Explorer](https://shubhu-io.github.io/python_projects_300/)**

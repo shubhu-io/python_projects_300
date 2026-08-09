@@ -23,6 +23,105 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTags = document.getElementById("modal-tags");
     const modalCodeBlock = document.getElementById("modal-code-block");
     const copyCodeBtn = document.getElementById("copy-code-btn");
+    const runCodeBtn = document.getElementById("run-code-btn");
+    const terminalContainer = document.getElementById("terminal-container");
+    const terminalOutput = document.getElementById("terminal-output");
+    const clearTerminalBtn = document.getElementById("clear-terminal-btn");
+
+    if (clearTerminalBtn) {
+        clearTerminalBtn.addEventListener("click", () => {
+            terminalOutput.textContent = "";
+        });
+    }
+
+    let pythonWorker = null;
+    let isExecuting = false;
+
+    // Register Service Worker for synchronous input interception
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            console.log("Service Worker registered.", reg);
+        }).catch((err) => {
+            console.error("Service Worker registration failed:", err);
+        });
+
+        // Listen for messages from Service Worker (Input requests)
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'INPUT_REQUESTED') {
+                handleTerminalInput(event.data.id);
+            }
+        });
+    }
+
+    function initPythonWorker() {
+        if (pythonWorker) return;
+        pythonWorker = new Worker('worker.js');
+        
+        pythonWorker.addEventListener('message', (e) => {
+            const data = e.data;
+            if (data.type === 'ready') {
+                runCodeBtn.textContent = "▶ Run Code";
+                runCodeBtn.disabled = false;
+            } else if (data.type === 'stdout') {
+                terminalOutput.textContent += data.text;
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            } else if (data.type === 'stderr') {
+                terminalOutput.innerHTML += `<span class="error">${data.text}</span>`;
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            } else if (data.type === 'done') {
+                isExecuting = false;
+                runCodeBtn.disabled = false;
+                runCodeBtn.textContent = "▶ Run Code";
+                terminalOutput.textContent += "\n>>> Execution Completed.\n";
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+    }
+
+    function handleTerminalInput(requestId) {
+        // Create an input element right inside the terminal
+        const inputField = document.createElement("span");
+        inputField.contentEditable = "true";
+        inputField.className = "terminal-input-active";
+        
+        terminalOutput.appendChild(inputField);
+        inputField.focus();
+
+        // Listen for Enter key
+        inputField.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                const text = inputField.textContent;
+                
+                // Lock the text in place
+                inputField.contentEditable = "false";
+                inputField.className = "";
+                terminalOutput.appendChild(document.createTextNode("\n"));
+                
+                // Send answer back to Service Worker (Robust against hard-refresh null controller)
+                if (navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'INPUT_PROVIDED',
+                        id: requestId,
+                        text: text
+                    });
+                } else {
+                    navigator.serviceWorker.ready.then(reg => {
+                        if (reg.active) {
+                            reg.active.postMessage({
+                                type: 'INPUT_PROVIDED',
+                                id: requestId,
+                                text: text
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // Start loading Python environment in the background
+    initPythonWorker();
 
     // Fetch projects_data.json
     fetch("projects_data.json")
@@ -162,11 +261,17 @@ document.addEventListener("DOMContentLoaded", () => {
         modalCodeBlock.textContent = proj.code;
         hljs.highlightElement(modalCodeBlock);
 
+        // Reset terminal state
+        terminalContainer.style.display = "none";
+        terminalOutput.textContent = "";
+
         codeModal.classList.add("active");
+        document.body.classList.add("modal-open");
     }
 
     function closeModal() {
         codeModal.classList.remove("active");
+        document.body.classList.remove("modal-open");
     }
 
     modalCloseBtn.addEventListener("click", closeModal);
@@ -183,6 +288,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 copyCodeBtn.textContent = "📋 Copy Code";
             }, 2000);
         });
+    });
+
+    // Run Code Listener
+    runCodeBtn.addEventListener("click", () => {
+        if (!pythonWorker || isExecuting) return;
+        
+        const codeText = modalCodeBlock.textContent;
+        terminalContainer.style.display = "block";
+        terminalOutput.textContent = "Executing...\n\n";
+        
+        isExecuting = true;
+        runCodeBtn.disabled = true;
+        runCodeBtn.textContent = "⏳ Running...";
+
+        pythonWorker.postMessage({ type: "runCode", code: codeText });
     });
 
     // Search Input Listener

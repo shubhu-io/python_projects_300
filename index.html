@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>300 Python Projects Explorer | Interactive Code Hub</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +24,9 @@
                     <p class="subtitle">Complete Source Code, Interactive Explorer & Practice Hub</p>
                 </div>
             </div>
-            <div class="stats-badge">
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <a href='https://ko-fi.com/T7W323SDIF' target='_blank' style='transition: transform 0.2s ease;'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                <div class="stats-badge">
                 <div class="stat-item">
                     <span class="stat-num" id="stat-total">300</span>
                     <span class="stat-label">Projects</span>
@@ -32,6 +36,7 @@
                     <span class="stat-num" id="stat-completed">0</span>
                     <span class="stat-label">Completed</span>
                 </div>
+            </div>
             </div>
         </div>
     </header>
@@ -110,9 +115,25 @@
                 <div class="code-container">
                     <div class="code-header">
                         <span>PYTHON SOURCE CODE</span>
-                        <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                        <div class="code-actions">
+                            <button class="run-btn" id="run-code-btn" disabled>⏳ Loading...</button>
+                            <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                        </div>
                     </div>
                     <pre><code class="language-python" id="modal-code-block"></code></pre>
+                </div>
+
+                <div class="terminal-container" id="terminal-container" style="display: none;">
+                    <div class="terminal-header">
+                        <div class="window-controls">
+                            <span class="dot close-dot"></span>
+                            <span class="dot min-dot"></span>
+                            <span class="dot max-dot"></span>
+                        </div>
+                        <span class="terminal-title">bash - python_execution</span>
+                        <button class="clear-terminal-btn" id="clear-terminal-btn">🧹 Clear</button>
+                    </div>
+                    <pre class="terminal-output" id="terminal-output"></pre>
                 </div>
             </div>
         </div>
