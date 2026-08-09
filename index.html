@@ -112,28 +112,30 @@
                     <div class="tags-row" id="modal-tags"></div>
                 </div>
 
-                <div class="code-container">
-                    <div class="code-header">
-                        <span>PYTHON SOURCE CODE</span>
-                        <div class="code-actions">
-                            <button class="run-btn" id="run-code-btn" disabled>⏳ Loading...</button>
-                            <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                <div class="modal-split-view">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>PYTHON SOURCE CODE</span>
+                            <div class="code-actions">
+                                <button class="run-btn" id="run-code-btn" disabled>⏳ Loading...</button>
+                                <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+                            </div>
                         </div>
+                        <pre><code class="language-python" id="modal-code-block"></code></pre>
                     </div>
-                    <pre><code class="language-python" id="modal-code-block"></code></pre>
-                </div>
 
-                <div class="terminal-container" id="terminal-container" style="display: none;">
-                    <div class="terminal-header">
-                        <div class="window-controls">
-                            <span class="dot close-dot"></span>
-                            <span class="dot min-dot"></span>
-                            <span class="dot max-dot"></span>
+                    <div class="terminal-container" id="terminal-container" style="display: none;">
+                        <div class="terminal-header">
+                            <div class="window-controls">
+                                <span class="dot close-dot"></span>
+                                <span class="dot min-dot"></span>
+                                <span class="dot max-dot"></span>
+                            </div>
+                            <span class="terminal-title">bash - python_execution</span>
+                            <button class="clear-terminal-btn" id="clear-terminal-btn">🧹 Clear</button>
                         </div>
-                        <span class="terminal-title">bash - python_execution</span>
-                        <button class="clear-terminal-btn" id="clear-terminal-btn">🧹 Clear</button>
+                        <pre class="terminal-output" id="terminal-output"></pre>
                     </div>
-                    <pre class="terminal-output" id="terminal-output"></pre>
                 </div>
             </div>
         </div>

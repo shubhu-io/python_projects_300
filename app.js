@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!pythonWorker || isExecuting) return;
         
         const codeText = modalCodeBlock.textContent;
-        terminalContainer.style.display = "block";
+        terminalContainer.style.display = "flex";
         terminalOutput.textContent = "Executing...\n\n";
         
         isExecuting = true;

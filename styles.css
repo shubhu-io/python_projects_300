@@ -537,12 +537,23 @@ body {
     gap: 6px;
 }
 
+.modal-split-view {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+}
+
 .code-container {
     background: var(--bg-code);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
-    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .code-header {
@@ -586,14 +597,10 @@ pre code {
     overflow-y: auto;
     overflow-x: auto;
     white-space: pre;
-    max-height: 55vh;
+    flex: 1;
+    min-height: 0;
 }
 
-@media (max-width: 900px) {
-    .main-container {
-        grid-template-columns: 1fr;
-    }
-}
 
 /* Run Code & Terminal Styles */
 .code-actions {
@@ -628,8 +635,11 @@ pre code {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
-    margin-top: 16px;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .terminal-header {
@@ -683,11 +693,12 @@ pre code {
     font-size: 0.85rem;
     color: #a7f3d0;
     padding: 16px;
-    max-height: 300px;
     overflow-y: auto;
     overflow-x: auto;
     white-space: pre;
     margin: 0;
+    flex: 1;
+    min-height: 0;
 }
 
 .terminal-output .error {
@@ -707,6 +718,15 @@ pre code {
     50% { border-color: transparent; }
 }
 
+@media (max-width: 900px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+    .modal-split-view {
+        flex-direction: column;
+    }
+}
+
 body.modal-open {
     overflow: hidden;
 }
@@ -714,8 +734,5 @@ body.modal-open {
 @media (max-width: 600px) {
     .modal-card {
         width: 95vw;
-    }
-    pre code {
-        max-height: 45vh;
     }
 }
