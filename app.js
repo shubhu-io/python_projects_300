@@ -79,6 +79,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleTerminalInput(requestId) {
+        if (window.inputQueue && window.inputQueue.length > 0) {
+            const text = window.inputQueue.shift();
+            // Automatically respond
+            if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'INPUT_RESPONSE',
+                    id: requestId,
+                    text: text
+                });
+            }
+            terminalOutput.textContent += text + "\n";
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            return;
+        }
+
         // Create an input element right inside the terminal
         const inputField = document.createElement("span");
         inputField.contentEditable = "true";
@@ -261,8 +276,58 @@ document.addEventListener("DOMContentLoaded", () => {
         modalCodeBlock.textContent = proj.code;
         hljs.highlightElement(modalCodeBlock);
 
+        // Parse for input() calls
+        const inputRegex = /input\s*\(\s*(?:(['"])(.*?)\1)?\s*\)/g;
+        let match;
+        const inputs = [];
+        while ((match = inputRegex.exec(proj.code)) !== null) {
+            inputs.push(match[2] || "Enter input:");
+        }
+
+        const userInputSection = document.getElementById("user-input-section");
+        const dynamicInputsContainer = document.getElementById("dynamic-inputs");
+        dynamicInputsContainer.innerHTML = "";
+        window.currentProjectHasInputs = inputs.length > 0;
+
+        if (inputs.length > 0) {
+            userInputSection.style.display = "block";
+            terminalContainer.style.display = "flex";
+            inputs.forEach((promptText, idx) => {
+                const group = document.createElement("div");
+                group.className = "input-group";
+                
+                const label = document.createElement("label");
+                label.className = "input-label";
+                label.textContent = promptText;
+                
+                const inputEl = document.createElement("input");
+                inputEl.type = "text";
+                inputEl.className = "dynamic-input";
+                inputEl.dataset.idx = idx;
+                
+                // Allow pressing Enter to jump to next or run
+                inputEl.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        const next = dynamicInputsContainer.querySelector(`input[data-idx="${idx + 1}"]`);
+                        if (next) {
+                            next.focus();
+                        } else {
+                            runCodeBtn.click();
+                        }
+                    }
+                });
+
+                group.appendChild(label);
+                group.appendChild(inputEl);
+                dynamicInputsContainer.appendChild(group);
+            });
+        } else {
+            userInputSection.style.display = "none";
+            terminalContainer.style.display = "none";
+        }
+
         // Reset terminal state
-        terminalContainer.style.display = "none";
         terminalOutput.textContent = "";
 
         codeModal.classList.add("active");
@@ -294,6 +359,15 @@ document.addEventListener("DOMContentLoaded", () => {
     runCodeBtn.addEventListener("click", () => {
         if (!pythonWorker || isExecuting) return;
         
+        // Collect inputs if any
+        window.inputQueue = [];
+        if (window.currentProjectHasInputs) {
+            const inputEls = document.querySelectorAll("#dynamic-inputs .dynamic-input");
+            inputEls.forEach(el => {
+                window.inputQueue.push(el.value || "");
+            });
+        }
+
         const codeText = modalCodeBlock.textContent;
         terminalContainer.style.display = "flex";
         terminalOutput.textContent = "Executing...\n\n";

@@ -727,6 +727,44 @@ pre code {
     }
 }
 
+.dynamic-inputs-container {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.dynamic-input {
+    background: #111827;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    padding: 8px 12px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.dynamic-input:focus {
+    border-color: #10b981;
+}
+
 body.modal-open {
     overflow: hidden;
 }
