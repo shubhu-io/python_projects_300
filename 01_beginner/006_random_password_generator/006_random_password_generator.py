@@ -3,7 +3,7 @@ Project 006: Random Password Generator
 Category: Security & Utilities
 Description: Generate a strong random password.
 """
-import random
+import secrets
 import string
 
 def run_project_6():
@@ -23,7 +23,7 @@ def run_project_6():
         if use_special:
             chars += string.punctuation
             
-        password = ''.join(random.choice(chars) for _ in range(length))
+        password = ''.join(secrets.choice(chars) for _ in range(length))
         print(f"\nGenerated Password: {password}")
         return True
     except ValueError:

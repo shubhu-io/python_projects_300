@@ -18,7 +18,7 @@ def run_project_80():
     title = input("Enter a title for this bookmark: ").strip()
     
     try:
-        with open(filename, 'a') as f:
+        with open(filename, 'a', encoding='utf-8') as f:
             f.write(f"{title}: {url}\n")
             
         print(f"\nSaved bookmark '{title}' to {filename}")

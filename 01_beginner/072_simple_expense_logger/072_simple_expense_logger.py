@@ -20,7 +20,7 @@ def run_project_72():
         cost = float(input("Enter the cost: $"))
         date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        with open(filename, 'a') as f:
+        with open(filename, 'a', encoding='utf-8') as f:
             f.write(f"[{date}] {item}: ${cost:.2f}\n")
             
         print(f"\nLogged '{item}' for ${cost:.2f} to {filename}")
