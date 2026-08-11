@@ -11,8 +11,8 @@ def run_project_2():
     
     try:
         num1 = float(input("Enter first number: "))
-        op = input("Enter operator (+, -, *, /): ").strip()
         num2 = float(input("Enter second number: "))
+        op = input("Enter operator (+, -, *, /): ").strip()
         
         if op == '+':
             result = num1 + num2
